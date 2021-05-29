@@ -18,7 +18,7 @@ public class ApiController {
 
     @PostConstruct
     private void populateStudents() {
-        this.students= new ArrayList<>();
+        this.students = new ArrayList<>();
         students.add(new Student("John", "Doe"));
         students.add(new Student("Jane", "Doe"));
         students.add(new Student("Max", "Temp"));
@@ -31,6 +31,9 @@ public class ApiController {
 
     @GetMapping("/students/{id}")
     public Student getStudent(@PathVariable int id) {
+        if (id > students.size() || id < 0) {
+            throw new StudentNotFoundException("Wrong id - " + id);
+        }
         return students.get(id);
     }
 }
